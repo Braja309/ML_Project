@@ -19,5 +19,5 @@ setup(
     install_requires = get_requirements_list()
 )
 
-if __name__=="__main__":
-    print(get_requirements_list())
+#if __name__=="__main__":
+#    print(get_requirements_list())
