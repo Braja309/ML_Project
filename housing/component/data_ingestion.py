@@ -1,5 +1,5 @@
 from os.path import exists
-from housing.config.configuration import DataIngestionConfig
+from housing.entity.config_entity import DataIngestionConfig
 import sys,os
 from housing.exception import HousingException
 from housing.logger import logging
@@ -76,8 +76,8 @@ class DataIngestion:
             split = StratifiedShuffleSplit(n_splits=1, test_size=0.2, random_state= 42)
 
             for train_index,test_index in split.split(housing_data_frame,housing_data_frame["income_cat"]):
-                strat_train_set = housing_data_frame.loc[train_index].drop(["income_cat"],index=1)
-                strat_test_set = housing_data_frame.loc[test_index].drop(["income_cat"],index=1)
+                strat_train_set = housing_data_frame.loc[train_index].drop(["income_cat"],axis=1)
+                strat_test_set = housing_data_frame.loc[test_index].drop(["income_cat"],axis=1)
             
             train_file_path = os.path.join(self.data_ingestion_config.ingested_train_dir,file_name)
             test_file_path = os.path.join(self.data_ingestion_config.ingested_test_dir,file_name)
@@ -110,4 +110,4 @@ class DataIngestion:
             raise HousingException(e,sys) from e
 
     def __del__(self):
-        logging.info(f"{'='*20}Data Ingestion log completed,{'='*20} \n\n")
+        logging.info(f"{'='*20}Data Ingestion log completed.{'='*20} \n\n")

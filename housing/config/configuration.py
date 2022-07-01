@@ -27,9 +27,8 @@ class Configuration:
                 self.time_stamp
             )
             data_ingestion_info = self.config_info[DATA_INGESTION_CONFIG_KEY]
-            dataset_download_url = os.path.join(
-                data_ingestion_artifact_dir,data_ingestion_info[DATA_INGESTION_DOWNLOAD_URL_KEY]
-            )
+            dataset_download_url = data_ingestion_info[DATA_INGESTION_DOWNLOAD_URL_KEY]
+            
             tgz_download_dir = os.path.join(
                 data_ingestion_artifact_dir,data_ingestion_info[DATA_INGESTION_TGZ_DOWNLOAD_DIR_KEY]
             ) 
