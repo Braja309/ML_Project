@@ -1,4 +1,3 @@
-from tkinter import E
 from housing.config.configuration import Configuration
 from housing.logger import logging
 from housing.exception import HousingException
@@ -53,7 +52,7 @@ class Pipeline:
             pass
         except Exception as e:
             raise HousingException(e,sys) from e
-            
+
     def run_pipeline(self):
         try:
             #Data_Ingestion
