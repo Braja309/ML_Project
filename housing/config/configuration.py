@@ -14,9 +14,13 @@ class Configuration:
         config_file_path:str = CONFIG_FILE_PATH,
         current_time_stamp:str = CURRENT_TIME_STAMP
         ) -> None:
-        self.config_info = read_yaml_file(file_path=config_file_path)
-        self.training_pipeline_config = self.get_training_pipeline_config()
-        self.time_stamp = current_time_stamp
+        try:
+                
+            self.config_info = read_yaml_file(file_path=config_file_path)
+            self.training_pipeline_config = self.get_training_pipeline_config()
+            self.time_stamp = current_time_stamp
+        except Exception as e:
+            raise HousingException(sys,e) from e
 
     def get_data_ingestion_config(self) -> DataIngestionConfig:
         try:
@@ -60,10 +64,30 @@ class Configuration:
 
     def get_data_validation_config(self) -> DataValidationConfig:
         try:
-            
-            schema_file_path = None
+            artifact_dir = self.training_pipeline_config.artifact_dir
+            data_validation_artifact_dir = os.path.join(
+                artifact_dir,
+                DATA_VALIDATION_ARTIFACT_DIR_NAME,
+                self.time_stamp
+            )
+            data_validation_config = self.config_info[DATA_VALIDATION_CONFIG_KEY]
+                        
+            schema_file_path = os.path.join(ROOT_DIR,
+            data_validation_config[DATA_VALIDATION_SCHEMA_DIR_KEY],
+            data_validation_config[DATA_VALIDATION_SCHEMA_FILE_NAME_KEY]
+            )
+
+            report_file_path = os.path.join(data_validation_artifact_dir,
+            data_validation_config[DATA_VALIDATION_REPORT_FILE_NAME_KEY]
+            )
+            report_page_file_path = os.path.join(data_validation_artifact_dir,
+            data_validation_config[DATA_VALIDATION_REPORT_PAGE_FILE_NAME_KEY]
+            )
+
             data_validation_config = DataValidationConfig(
-                schema_file_path=schema_file_path
+                schema_file_path=schema_file_path,
+                report_file_path=report_file_path,
+                report_page_file_path=report_page_file_path
             )
             return data_validation_config
         except Exception as e:
