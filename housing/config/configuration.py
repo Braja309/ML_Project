@@ -70,6 +70,7 @@ class Configuration:
                 DATA_VALIDATION_ARTIFACT_DIR_NAME,
                 self.time_stamp
             )
+            logging.info(data_validation_artifact_dir)
             data_validation_config = self.config_info[DATA_VALIDATION_CONFIG_KEY]
                         
             schema_file_path = os.path.join(ROOT_DIR,
@@ -89,6 +90,7 @@ class Configuration:
                 report_file_path=report_file_path,
                 report_page_file_path=report_page_file_path
             )
+            logging.info(f"Data Validation Config : {data_validation_config}")
             return data_validation_config
         except Exception as e:
             raise HousingException(sys,e) from e
