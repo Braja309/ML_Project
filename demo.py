@@ -2,12 +2,14 @@ from housing.pipeline.pipeline import Pipeline
 from housing.exception import HousingException
 from housing.logger import logging
 from housing.config.configuration import Configuration
-from housing.component.data_transformation import DataTransformation
+from housing.constant import get_current_time_stamp
 
 def main():
     try:
-        pipeline = Pipeline()
-        pipeline.run_pipeline()
+
+        pipeline = Pipeline(config= Configuration(current_time_stamp=get_current_time_stamp()))
+        pipeline.start()
+        #pipeline.run_pipeline()
         #data_validation_config = Configuration().get_data_validation_config()
         #print(data_validation_config)
         #data_transformation_config = Configuration().get_data_transformation_config()
