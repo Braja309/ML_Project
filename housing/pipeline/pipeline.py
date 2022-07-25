@@ -19,7 +19,7 @@ import uuid
 from datetime import datetime
 import pandas as pd
 
-Experiment = namedtuple("Experiment", ["experiment_id", "initalization_timestamp", "artifact_time_stamp",
+Experiment = namedtuple("Experiment", ["experiment_id", "initialization_timestamp", "artifact_time_stamp",
                         "running_status", "start_time", "stop_time", "execution_time", "message",
                         "experiment_file_path", "accuracy", "is_model_accepted"])
 
@@ -113,7 +113,7 @@ class Pipeline(Thread):
 
             experiment_id = str(uuid.uuid4())
             Pipeline.experiment = Experiment(experiment_id = experiment_id,
-                                            initalization_timestamp = self.config.time_stamp,
+                                            initialization_timestamp = self.config.time_stamp,
                                             artifact_time_stamp = self.config.time_stamp,
                                             running_status = True,
                                             start_time = datetime.now(),
@@ -147,7 +147,7 @@ class Pipeline(Thread):
 
             stop_time = datetime.now()
             Pipeline.experiment = Experiment(experiment_id = experiment_id,
-                                            initalization_timestamp = self.config.time_stamp,
+                                            initialization_timestamp = self.config.time_stamp,
                                             artifact_time_stamp = self.config.time_stamp,
                                             running_status = False,
                                             start_time = Pipeline.experiment.start_time,
@@ -199,7 +199,7 @@ class Pipeline(Thread):
     @classmethod
     def get_experiments_status(cls, limit: int = 5) -> pd.DataFrame:
         try:
-            if os.path.exists(Pipeline.experiment_file_path):
+            if Pipeline.experiment_file_path is not None and os.path.exists(Pipeline.experiment_file_path):
                 df = pd.read_csv(Pipeline.experiment_file_path)
                 limit = -1 * int(limit)
                 return df[limit:].drop(columns=["experiment_file_path", "initialization_timestamp"], axis=1)

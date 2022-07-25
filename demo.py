@@ -8,7 +8,8 @@ def main():
     try:
 
         pipeline = Pipeline(config= Configuration(current_time_stamp=get_current_time_stamp()))
-        pipeline.start()
+        print(pipeline.get_experiments_status())
+        #pipeline.start()
         #pipeline.run_pipeline()
         #data_validation_config = Configuration().get_data_validation_config()
         #print(data_validation_config)
