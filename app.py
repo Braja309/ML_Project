@@ -46,9 +46,8 @@ def render_artifact_dir(req_path):
     print(f"Requested Path : {req_path}")
     abs_path =os.path.join(req_path)
     print(abs_path)
-    if os.path.exists(abs_path):
+    if not os.path.exists(abs_path):
         return abort(404)
-    
     if os.path.isfile(abs_path):
         if ".html" in abs_path:
             with open(abs_path, "r", encoding="utf-8") as file:
